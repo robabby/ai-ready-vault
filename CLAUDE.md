@@ -5,6 +5,7 @@
 Documentation website explaining AI-ready Obsidian vaults, with downloadable starter vault tiers.
 
 **Stack**: Next.js 16, TypeScript, Tailwind CSS 4, MDX
+**Package Manager**: pnpm
 **Deployment**: Vercel
 
 ## Design System
@@ -57,9 +58,9 @@ public/vaults/                # Generated ZIPs (minimal, standard, full)
 ## Development Commands
 
 ```bash
-npm run dev          # Start dev server
-npm run build        # Production build
-npm run build-vaults # Generate vault ZIPs
+pnpm dev          # Start dev server
+pnpm build        # Production build
+pnpm build-vaults # Generate vault ZIPs
 ```
 
 ## Key Implementation Notes

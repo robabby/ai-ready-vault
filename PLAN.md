@@ -6,6 +6,7 @@ A documentation website explaining AI-ready Obsidian vaults, with downloadable s
 
 **Location**: `~/Workbench/ai-ready-vault`
 **Stack**: Next.js 16, TypeScript, Tailwind CSS 4, MDX
+**Package Manager**: pnpm
 **Deployment**: Vercel (standalone domain TBD)
 
 ---
