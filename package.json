@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "eslint",
     "build-vaults": "tsx scripts/build-vaults.ts",
-    "prebuild": "pnpm build-vaults"
+    "build-og": "tsx scripts/build-og-image.ts",
+    "prebuild": "pnpm build-vaults && pnpm build-og"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -35,6 +36,8 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "minimatch": "^10.1.1",
+    "satori": "^0.18.3",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5",

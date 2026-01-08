@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { PageWrapper } from "@/components/layout";
 import { CommandHeader } from "@/components/ui/CommandHeader";
 import { CRTScreen } from "@/components/ui/CRTScreen";
 import { TierCard, DownloadButton, type TierInfo } from "@/components/downloads";
+
+export const metadata: Metadata = {
+  title: "Downloads",
+  description:
+    "Download AI-ready Obsidian vault starter templates. Choose from minimal, standard, or full configurations.",
+};
 
 /**
  * Vault tier data.
