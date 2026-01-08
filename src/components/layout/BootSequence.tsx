@@ -96,6 +96,11 @@ export function BootSequence({ children }: BootSequenceProps) {
 
     if (isBootComplete) return;
 
+    // Track all cleanup functions
+    let line1Cleanup: (() => void) | null = null;
+    let line2Cleanup: (() => void) | null = null;
+    let flickerInnerTimer: ReturnType<typeof setTimeout> | null = null;
+
     // Power-on phase (CRT animation via CSS)
     const cursorTimer = setTimeout(() => {
       setShowCursor(true);
@@ -105,20 +110,20 @@ export function BootSequence({ children }: BootSequenceProps) {
     // Typing line 1
     const line1Timer = setTimeout(() => {
       setPhase("typing-1");
-      typeText(BOOT_LINE_1, setTypedLine1, TIMELINE.LINE_1_END - TIMELINE.LINE_1_START);
+      line1Cleanup = typeText(BOOT_LINE_1, setTypedLine1, TIMELINE.LINE_1_END - TIMELINE.LINE_1_START);
     }, TIMELINE.LINE_1_START);
 
     // Typing line 2
     const line2Timer = setTimeout(() => {
       setPhase("typing-2");
-      typeText(BOOT_LINE_2, setTypedLine2, TIMELINE.LINE_2_END - TIMELINE.LINE_2_START);
+      line2Cleanup = typeText(BOOT_LINE_2, setTypedLine2, TIMELINE.LINE_2_END - TIMELINE.LINE_2_START);
     }, TIMELINE.LINE_2_START);
 
     // Flicker effect
     const flickerTimer = setTimeout(() => {
       setShowFlicker(true);
       setPhase("flicker");
-      setTimeout(() => setShowFlicker(false), 80);
+      flickerInnerTimer = setTimeout(() => setShowFlicker(false), 80);
     }, TIMELINE.FLICKER);
 
     // Content reveal (hard cut)
@@ -139,6 +144,13 @@ export function BootSequence({ children }: BootSequenceProps) {
       clearTimeout(flickerTimer);
       clearTimeout(revealTimer);
       clearTimeout(completeTimer);
+      // Clean up typing animation timeouts
+      line1Cleanup?.();
+      line2Cleanup?.();
+      // Clean up nested flicker timer
+      if (flickerInnerTimer) {
+        clearTimeout(flickerInnerTimer);
+      }
     };
   }, [hasMounted, hasSeenBootBefore, reducedMotion, isBootComplete, skipBootSequence, markBootComplete]);
 
@@ -226,18 +238,26 @@ export function BootSequence({ children }: BootSequenceProps) {
 
 /**
  * Types text character by character over a duration.
+ * Returns a cleanup function to clear all pending timeouts.
  */
 function typeText(
   text: string,
   setter: (value: string) => void,
   duration: number
-) {
+): () => void {
   const chars = text.split("");
   const charDelay = duration / chars.length;
+  const timeouts: ReturnType<typeof setTimeout>[] = [];
 
   chars.forEach((_, index) => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setter(text.slice(0, index + 1));
     }, charDelay * index);
+    timeouts.push(timeout);
   });
+
+  // Return cleanup function
+  return () => {
+    timeouts.forEach(clearTimeout);
+  };
 }

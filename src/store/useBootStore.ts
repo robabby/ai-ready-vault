@@ -44,6 +44,13 @@ export const useBootStore = create<BootStore>()(
       name: "boot-storage",
       // Only persist hasSeenBootBefore, not isBootComplete
       partialize: (state) => ({ hasSeenBootBefore: state.hasSeenBootBefore }),
+      // After rehydration, if user has seen boot before, mark as complete immediately
+      // This prevents a flash of the boot sequence on return visits
+      onRehydrateStorage: () => (state) => {
+        if (state?.hasSeenBootBefore) {
+          state.isBootComplete = true;
+        }
+      },
     }
   )
 );
