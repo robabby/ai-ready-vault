@@ -1,0 +1,368 @@
+import { PageWrapper } from "@/components/layout";
+import { CommandHeader } from "@/components/ui/CommandHeader";
+import { CRTScreen } from "@/components/ui/CRTScreen";
+
+export const metadata = {
+  title: "Guide | AI-Ready Vault",
+  description: "Learn how to structure your Obsidian vault for effective AI collaboration.",
+};
+
+<PageWrapper>
+<CRTScreen className="p-4 pt-3" showBezel={false} forceMinimal>
+<CommandHeader level={1}>Guide</CommandHeader>
+
+<nav className="mt-4 mb-8 p-4 border border-border rounded-lg bg-elevated">
+  <p className="text-phosphor-dim text-sm uppercase tracking-wide mb-3"># Table of Contents</p>
+  <ul className="space-y-2 text-sm">
+    <li><a href="#what-is-an-ai-ready-vault" className="terminal-link">What is an AI-Ready Vault?</a></li>
+    <li><a href="#the-claudemd-file" className="terminal-link">The CLAUDE.md File</a></li>
+    <li><a href="#folder-structure" className="terminal-link">Folder Structure</a></li>
+    <li><a href="#session-workflow" className="terminal-link">Session Workflow</a></li>
+    <li><a href="#memory-system" className="terminal-link">Memory System</a></li>
+    <li><a href="#working-with-claude-code" className="terminal-link">Working with Claude Code</a></li>
+    <li><a href="#anti-patterns" className="terminal-link">Anti-Patterns to Avoid</a></li>
+  </ul>
+</nav>
+
+<article className="prose">
+
+## What is an AI-Ready Vault?
+
+An AI-ready vault is an Obsidian vault structured to enable effective collaboration with AI assistants like Claude. The key insight is simple: **AI assistants work better when they have context.**
+
+Unlike traditional note-taking systems designed for human consumption, an AI-ready vault provides:
+
+- **Explicit context** through a dedicated instruction file (CLAUDE.md)
+- **Consistent structure** so the AI knows where to find things
+- **Persistent memory** to maintain continuity across sessions
+- **Clear workflows** for hydrating, working, and preserving knowledge
+
+The result is AI collaboration that feels less like starting from scratch each time and more like working with a colleague who understands your project.
+
+## The CLAUDE.md File
+
+The CLAUDE.md file is the cornerstone of an AI-ready vault. It lives at the root of your vault and provides Claude with essential context before every interaction.
+
+### What Goes in CLAUDE.md
+
+```markdown
+# My Vault Name
+
+> This file provides context to Claude when working in this vault.
+
+## Owner
+
+**Name**: Your Name
+**Created**: 2024-01-15
+
+## Vault Purpose
+
+This vault is for [describe your primary use case].
+
+## Key Locations
+
+| Location | Purpose |
+|----------|---------|
+| `Areas/AI/Memory/` | Long-term memory for AI sessions |
+| `Projects/Active/` | Current projects |
+| `Inbox/` | Quick capture |
+
+## Working Agreement
+
+### Communication Style
+- Be direct and concise
+- Ask clarifying questions when needed
+- Provide reasoning for suggestions
+
+### Session Workflow
+1. **Hydrate**: Load context from recent sessions
+2. **Work**: Collaborate on the current task
+3. **Reflect**: At session end, consolidate learnings
+4. **Remember**: Store important insights as memories
+
+## Current Focus
+
+Update this section with your current priorities.
+```
+
+### Key Sections Explained
+
+**Owner**: Basic identification. Claude uses this to personalize responses and understand who it's working with.
+
+**Vault Purpose**: High-level context. What is this vault for? Research? Writing? Software development? Life organization?
+
+**Key Locations**: A map of important directories. This helps Claude navigate without searching.
+
+**Working Agreement**: Your preferences for how Claude should communicate and behave. Think of it as a style guide for your AI collaborator.
+
+**Current Focus**: Dynamic context. Update this regularly to keep Claude oriented on your priorities.
+
+### Best Practices
+
+- Keep CLAUDE.md under 100 lines
+- Update "Current Focus" weekly or per-project
+- Be specific about communication preferences
+- Include project-specific context when relevant
+
+## Folder Structure
+
+An AI-ready vault uses a modified PARA structure optimized for AI navigation. PARA stands for Projects, Areas, Resources, and Archive.
+
+### The Directory Layout
+
+```
+vault/
+├── Archive/          # Completed and archived items
+├── Areas/            # Ongoing areas of responsibility
+│   └── AI/
+│       ├── Memory/   # Long-term memory storage
+│       │   ├── Episodic/
+│       │   ├── Semantic/
+│       │   ├── Procedural/
+│       │   └── Strategic/
+│       └── Collaboration/
+│           └── Sessions/
+├── Contacts/         # People and relationships
+├── Inbox/            # Quick capture, processing queue
+├── Planner/          # Schedules and templates
+│   └── Templates/
+├── Projects/         # Active work
+│   ├── Active/
+│   ├── Backlog/
+│   └── Completed/
+├── Resources/        # Reference material
+├── Studio/           # Creative work in progress
+├── CLAUDE.md         # AI context file
+└── Home.md           # Dashboard
+```
+
+### Why This Structure Works
+
+**Predictability**: Claude knows where to look. `Projects/Active/` always contains current work. `Areas/AI/Memory/` always contains memories.
+
+**Clear boundaries**: The difference between Projects (finite) and Areas (ongoing) helps both you and Claude understand what's in progress vs. what needs maintenance.
+
+**Memory isolation**: Keeping AI memory in `Areas/AI/Memory/` separates it from your other notes, making it easier to manage and search.
+
+**Template accessibility**: Storing templates in `Planner/Templates/` provides consistent starting points for new notes.
+
+## Session Workflow
+
+The session workflow is how you and Claude maintain continuity across conversations. It follows four phases: hydrate, work, reflect, and remember.
+
+### Hydrate
+
+Start each session by loading relevant context. This might include:
+
+- Recent session logs from `Areas/AI/Collaboration/Sessions/`
+- Relevant memories from `Areas/AI/Memory/`
+- Active project notes from `Projects/Active/`
+- Current focus from CLAUDE.md
+
+The goal is to bring Claude up to speed quickly without repeating yourself.
+
+### Work
+
+During the session, collaborate naturally. Some tips:
+
+- State your goal clearly at the start
+- Ask Claude to read specific files when relevant
+- Make decisions together and document them
+- Take notes on important discoveries
+
+### Reflect
+
+At the end of a significant session, take time to consolidate. Ask:
+
+- What did we accomplish?
+- What decisions were made?
+- What should we remember for next time?
+- What needs to be updated in CLAUDE.md?
+
+### Remember
+
+Create memories for anything worth preserving. Memories go in `Areas/AI/Memory/` organized by type:
+
+- **Episodic**: Specific session events and outcomes
+- **Semantic**: Facts, concepts, knowledge gained
+- **Procedural**: Workflows, processes, how-to's discovered
+- **Strategic**: Goals, principles, important decisions
+
+### Session Log Template
+
+```markdown
+---
+date: 2024-01-15
+duration: 45min
+project: [[Projects/Active/my-project]]
+---
+
+# Session Log: 2024-01-15
+
+## Goal
+What we set out to accomplish.
+
+## Outcomes
+- What we actually accomplished
+- Decisions made
+- Problems encountered
+
+## Memories Created
+- [[Memory link if created]]
+
+## Next Steps
+- What to do next session
+```
+
+## Memory System
+
+The memory system provides Claude with long-term recall across sessions. It's organized into four types based on cognitive science.
+
+### Memory Types
+
+**Episodic Memory** (`Memory/Episodic/`)
+Specific events and sessions. "On January 15th, we decided to use TypeScript for the project."
+
+**Semantic Memory** (`Memory/Semantic/`)
+Facts and knowledge. "The API rate limit is 100 requests per minute."
+
+**Procedural Memory** (`Memory/Procedural/`)
+How-to's and workflows. "To deploy, run build then push to main branch."
+
+**Strategic Memory** (`Memory/Strategic/`)
+Goals, principles, and decisions. "We prioritize readability over clever code."
+
+### Creating Good Memories
+
+A memory note should be:
+
+- **Specific**: One concept or event per note
+- **Searchable**: Use clear titles and tags
+- **Contextual**: Include why this matters
+- **Linked**: Connect to related notes
+
+```markdown
+---
+type: semantic
+summary: API authentication uses JWT tokens
+tags: [api, auth, technical]
+created: 2024-01-15
+---
+
+# API Authentication
+
+The project uses JWT tokens for API authentication.
+
+## Key Details
+- Tokens expire after 24 hours
+- Refresh tokens last 7 days
+- Store tokens in httpOnly cookies
+
+## Related
+- [[Projects/Active/api-project]]
+```
+
+### Memory Retrieval
+
+When starting a session, Claude can search memories by:
+
+- Reading the Memory Dashboard at `Areas/AI/Memory/Memory.md`
+- Searching specific memory folders
+- Following links from project notes
+
+The DataView plugin (optional) can create dynamic lists of recent memories.
+
+## Working with Claude Code
+
+Claude Code is a CLI tool that brings Claude directly into your development workflow. Here's how to use it effectively with an AI-ready vault.
+
+### Setup
+
+Claude Code automatically reads CLAUDE.md files in your project directory. For Obsidian vaults, this means Claude already has your context when you start.
+
+```bash
+# Navigate to your vault
+cd ~/Documents/MyVault
+
+# Start Claude Code
+claude
+```
+
+### Useful Commands
+
+When working in your vault:
+
+- Ask Claude to read specific notes: "Read the active project in Projects/Active/"
+- Create session logs: "Create a session log for today using the template"
+- Search memories: "What do we know about the API authentication?"
+- Update context: "Update the Current Focus section in CLAUDE.md"
+
+### Tips for Effective Use
+
+**Be explicit about file operations**: "Read the file at Projects/Active/my-project.md" works better than "look at my project."
+
+**Use the session workflow**: Even in Claude Code, the hydrate-work-reflect-remember cycle helps maintain continuity.
+
+**Keep CLAUDE.md current**: The more accurate your context file, the less time you spend re-explaining.
+
+**Trust the structure**: If you follow the folder conventions, Claude can navigate without detailed instructions.
+
+## Anti-Patterns to Avoid
+
+Common mistakes that reduce the effectiveness of an AI-ready vault:
+
+### Giant Context Files
+
+**Problem**: CLAUDE.md files with 500+ lines of instructions.
+
+**Why it fails**: Claude has limited context. Bloated files waste tokens on rarely-relevant information.
+
+**Solution**: Keep CLAUDE.md focused. Move detailed documentation to other notes and link to them.
+
+### No Structure
+
+**Problem**: Dumping all notes in one folder with inconsistent naming.
+
+**Why it fails**: Claude can't navigate efficiently. You spend time explaining where things are.
+
+**Solution**: Follow the folder structure. Consistent organization benefits both you and Claude.
+
+### Ignoring the Workflow
+
+**Problem**: Treating every session as independent with no memory.
+
+**Why it fails**: You repeat yourself constantly. No learning accumulates.
+
+**Solution**: Use the hydrate-work-reflect-remember cycle. Create session logs and memories.
+
+### Over-Engineering Memory
+
+**Problem**: Creating memories for everything, complex tagging systems, dozens of categories.
+
+**Why it fails**: Maintenance burden grows. Important memories get lost in noise.
+
+**Solution**: Only memorize what's genuinely reusable. Start simple and add complexity only when needed.
+
+### Stale Context
+
+**Problem**: CLAUDE.md says "Current Focus: Q3 planning" but it's now Q1 of the next year.
+
+**Why it fails**: Claude receives misleading context and makes wrong assumptions.
+
+**Solution**: Update Current Focus regularly. Archive old priorities.
+
+### Treating Claude as Infallible
+
+**Problem**: Accepting everything Claude says without verification.
+
+**Why it fails**: Claude can hallucinate, misunderstand, or make mistakes.
+
+**Solution**: Verify important information. Check file contents. Test suggestions.
+
+---
+
+Ready to get started? [Download a starter vault](/downloads) and begin building your AI-ready system.
+
+</article>
+</CRTScreen>
+</PageWrapper>
