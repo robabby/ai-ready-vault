@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { CRTScreen } from "@/components/ui/CRTScreen";
 import { Cursor } from "@/components/ui/Cursor";

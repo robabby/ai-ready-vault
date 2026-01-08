@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
