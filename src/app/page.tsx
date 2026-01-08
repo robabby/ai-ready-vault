@@ -1,3 +1,4 @@
+import { PageWrapper } from "@/components/layout";
 import { CRTScreen } from "@/components/ui/CRTScreen";
 import { CommandHeader } from "@/components/ui/CommandHeader";
 import { TerminalBox } from "@/components/ui/TerminalBox";
@@ -6,8 +7,8 @@ import { Link } from "@/components/ui/Link";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-void p-4 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <PageWrapper>
+      <div className="space-y-8">
         {/* Hero Section */}
         <CRTScreen className="p-8 md:p-12">
           <CommandHeader level={1}>Build an AI-Ready Vault</CommandHeader>
@@ -82,17 +83,7 @@ export default function Home() {
             </p>
           </div>
         </CRTScreen>
-
-        {/* Footer */}
-        <footer className="text-center text-text-muted py-8 border-t border-border">
-          <p>
-            Built for the{" "}
-            <Link href="https://metatron.sh" external>
-              Metatron Collective
-            </Link>
-          </p>
-        </footer>
       </div>
-    </div>
+    </PageWrapper>
   );
 }
