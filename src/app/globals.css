@@ -48,17 +48,17 @@
   --text-quiet: 0.875rem;
 
   /* -------------------------------------------------------------------------
-     SPACING (8px base unit)
+     SPACING (Tailwind default scale)
      ------------------------------------------------------------------------- */
 
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
-  --spacing-3: 1rem;
-  --spacing-4: 1.5rem;
-  --spacing-5: 2rem;
-  --spacing-6: 3rem;
-  --spacing-7: 4rem;
-  --spacing-8: 6rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-7: 1.75rem;
+  --spacing-8: 2rem;
 }
 
 /* =============================================================================
@@ -160,19 +160,18 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  opacity: 0.06;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   pointer-events: none;
   z-index: 12;
-  animation: grain-shift 0.5s steps(1) infinite;
+  /* Subtle, slow grain drift - no jarring movement */
+  animation: grain-drift 8s linear infinite;
 }
 
-@keyframes grain-shift {
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(-2px, 1px); }
-  50% { transform: translate(1px, -1px); }
-  75% { transform: translate(-1px, 2px); }
+@keyframes grain-drift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-4px, -4px); }
 }
 
 /* Screen curvature */
@@ -184,7 +183,7 @@ body {
 
 /* CRT bezel */
 .crt-bezel {
-  padding: 20px;
+  padding: 12px;
   background: linear-gradient(145deg, #2a2a3a, #1a1a2a, #0a0a15);
   border-radius: 25px;
   box-shadow:
@@ -367,4 +366,212 @@ body {
 /* Only apply will-change to actively animating element */
 .grain::before {
   will-change: transform;
+}
+
+/* =============================================================================
+   CODE BLOCK STYLING
+   ============================================================================= */
+
+/* Override Shiki's default pre/code styling */
+.code-block-content pre {
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+}
+
+.code-block-content code {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Line numbers for multi-line code */
+.code-with-lines .code-block-content code {
+  counter-reset: line;
+}
+
+.code-with-lines .code-block-content code .line {
+  display: block;
+  counter-increment: line;
+}
+
+.code-with-lines .code-block-content code .line::before {
+  content: counter(line);
+  display: inline-block;
+  width: 2.5rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+/* Code highlighting on hover */
+.code-block-content code .line:hover {
+  background: rgba(232, 176, 75, 0.05);
+}
+
+/* =============================================================================
+   MDX PROSE STYLING
+   ============================================================================= */
+
+.prose {
+  color: var(--color-text);
+  max-width: 65ch;
+}
+
+.prose h2 {
+  color: var(--color-phosphor);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.prose h2::before {
+  content: "> ";
+  color: var(--color-phosphor-dim);
+}
+
+.prose h3 {
+  color: var(--color-phosphor-bright);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose h3::before {
+  content: "# ";
+  color: var(--color-phosphor-dim);
+}
+
+.prose h4 {
+  color: var(--color-text-bright);
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+  line-height: 1.65;
+}
+
+.prose ul,
+.prose ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+  line-height: 1.65;
+}
+
+.prose ul li::marker {
+  color: var(--color-phosphor-dim);
+}
+
+.prose ol li::marker {
+  color: var(--color-phosphor-dim);
+}
+
+.prose strong {
+  color: var(--color-text-bright);
+  font-weight: 600;
+}
+
+.prose em {
+  color: var(--color-text);
+  font-style: italic;
+}
+
+.prose blockquote {
+  border-left: 2px solid var(--color-phosphor-dim);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 2rem 0;
+}
+
+/* Links in prose */
+.prose a {
+  color: var(--color-phosphor-bright);
+  text-decoration: underline;
+  text-decoration-color: var(--color-phosphor-dim);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--color-phosphor-bright);
+}
+
+/* Code in prose - spacing around code blocks */
+.prose pre {
+  margin: 1.5rem 0;
+}
+
+/* Tables in prose */
+.prose table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+}
+
+.prose th,
+.prose td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.prose th {
+  color: var(--color-phosphor);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  font-weight: normal;
+}
+
+.prose td {
+  font-size: 0.9375rem;
+}
+
+.prose tr:hover td {
+  background: rgba(232, 176, 75, 0.03);
+}
+
+/* Anchor links in headings */
+.prose h2 .anchor-link,
+.prose h3 .anchor-link,
+.prose h4 .anchor-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.prose h2 .anchor-link:hover,
+.prose h3 .anchor-link:hover,
+.prose h4 .anchor-link:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--color-phosphor-dim);
+  text-underline-offset: 4px;
+}
+
+/* Scroll margin for anchor targets */
+.prose h2[id],
+.prose h3[id],
+.prose h4[id] {
+  scroll-margin-top: 2rem;
 }

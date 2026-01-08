@@ -105,8 +105,10 @@ src/
 │   └── ui/                   # CommandHeader, TerminalBox, CRTScreen, CodeBlock, Cursor, Link
 ├── hooks/                    # useReducedMotion
 ├── store/                    # useBootStore (Zustand)
-├── lib/                      # mdx-components, a11y utilities
+├── lib/                      # cn utility, a11y utilities
 └── styles/globals.css
+
+mdx-components.tsx            # Root-level MDX component overrides (Next.js convention)
 
 vault-source/                 # Master vault for ZIP generation
 scripts/build-vaults.ts       # Generates vault ZIPs
@@ -129,6 +131,24 @@ pnpm build-vaults # Generate vault ZIPs
 - **State management** - Zustand for boot sequence (persisted to localStorage)
 - Use MDX for guide content
 - Vault tiers: Minimal (~10 files), Standard (~25 files), Full (~50 files)
+
+### CRT Effects Gotchas
+
+**Long-form content pages**: The `.crt-curve` class applies a 3D perspective transform that causes significant visual displacement on tall content (~300px offset). For long-form pages like the guide:
+```tsx
+<CRTScreen showBezel={false} forceMinimal>
+  {/* content */}
+</CRTScreen>
+```
+
+**Grain animation**: Uses slow 8s linear drift (not jarring steps). Opacity is subtle (0.04).
+
+### CodeBlock Component
+
+Uses **Shiki** for syntax highlighting with a custom amber phosphor theme matching the design system. Supports:
+- Line numbers (auto for multi-line code)
+- Optional filename header with window control dots
+- Custom token colors: phosphor for keywords, bright for strings, muted for comments
 
 ## Current Phase
 
