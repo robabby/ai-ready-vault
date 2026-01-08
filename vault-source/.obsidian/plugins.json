@@ -1,0 +1,25 @@
+{
+  "recommended": [
+    {
+      "id": "dataview",
+      "name": "Dataview",
+      "description": "Query and display data from your vault"
+    },
+    {
+      "id": "templater-obsidian",
+      "name": "Templater",
+      "description": "Advanced templating for notes"
+    },
+    {
+      "id": "calendar",
+      "name": "Calendar",
+      "description": "Calendar view for daily notes"
+    },
+    {
+      "id": "periodic-notes",
+      "name": "Periodic Notes",
+      "description": "Daily, weekly, monthly notes"
+    }
+  ],
+  "note": "These plugins are recommended but not pre-installed. Install via Settings > Community Plugins."
+}
