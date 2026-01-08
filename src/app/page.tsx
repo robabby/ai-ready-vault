@@ -1,65 +1,98 @@
-import Image from "next/image";
+import { CRTScreen } from "@/components/ui/CRTScreen";
+import { CommandHeader } from "@/components/ui/CommandHeader";
+import { TerminalBox } from "@/components/ui/TerminalBox";
+import { Cursor } from "@/components/ui/Cursor";
+import { Link } from "@/components/ui/Link";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="min-h-screen bg-void p-4 md:p-8">
+      <div className="max-w-4xl mx-auto space-y-8">
+        {/* Hero Section */}
+        <CRTScreen className="p-8 md:p-12">
+          <CommandHeader level={1}>Build an AI-Ready Vault</CommandHeader>
+          <p className="mt-6 text-text-bright text-lg">
+            Structure your Obsidian vault for optimal AI collaboration.
+            <Cursor />
           </p>
+          <p className="mt-4 text-text-muted">
+            A documentation site explaining AI-ready vaults with downloadable
+            starter templates.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link href="/guide" className="text-lg">
+              Read the Guide
+            </Link>
+            <Link href="/downloads" className="text-lg">
+              Download Vaults
+            </Link>
+          </div>
+        </CRTScreen>
+
+        {/* Feature Cards */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <TerminalBox title="structure.md">
+            <CommandHeader level={2}>Structure</CommandHeader>
+            <p className="mt-4 text-text">
+              PARA-inspired folder organization optimized for AI navigation.
+              Projects, Areas, Resources, and Archive with semantic boundaries.
+            </p>
+          </TerminalBox>
+
+          <TerminalBox title="workflow.md">
+            <CommandHeader level={2}>Workflow</CommandHeader>
+            <p className="mt-4 text-text">
+              Session-based collaboration with hydrate, reflect, remember, and
+              recall patterns. Persistent context across conversations.
+            </p>
+          </TerminalBox>
+
+          <TerminalBox title="memory.md" variant="elevated">
+            <CommandHeader level={2}>Memory</CommandHeader>
+            <p className="mt-4 text-text">
+              Four memory types: Episodic, Semantic, Procedural, and Strategic.
+              Build institutional knowledge that persists.
+            </p>
+          </TerminalBox>
+
+          <TerminalBox title="claude.md" variant="code">
+            <CommandHeader level={2}>CLAUDE.MD</CommandHeader>
+            <p className="mt-4 text-text">
+              The working agreement file that defines how Claude interacts with
+              your vault. Customizable rules and preferences.
+            </p>
+          </TerminalBox>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+
+        {/* Demo Section */}
+        <CRTScreen forceMinimal showBezel={false} className="p-6">
+          <CommandHeader level={2}>System Check</CommandHeader>
+          <div className="mt-4 font-mono space-y-1">
+            <p>
+              <span className="text-phosphor-dim">$</span>{" "}
+              <span className="text-text">checking vault status...</span>
+            </p>
+            <p className="text-success">CLAUDE.MD: FOUND</p>
+            <p className="text-success">MEMORY SYSTEM: ACTIVE</p>
+            <p className="text-success">PLUGINS: OK</p>
+            <p className="text-phosphor">
+              <span className="text-phosphor-dim">&gt;</span> READY FOR
+              COLLABORATION
+              <Cursor />
+            </p>
+          </div>
+        </CRTScreen>
+
+        {/* Footer */}
+        <footer className="text-center text-text-muted py-8 border-t border-border">
+          <p>
+            Built for the{" "}
+            <Link href="https://metatron.sh" external>
+              Metatron Collective
+            </Link>
+          </p>
+        </footer>
+      </div>
     </div>
   );
 }
