@@ -502,6 +502,65 @@ Everything in Standard, plus:
 - [ ] Build Header.tsx, Footer.tsx, PageWrapper.tsx
 - [ ] Create placeholder pages (all routes)
 
+#### Phase 2 Architecture Decisions
+
+**Approach:** Pragmatic with authentic typing animation - balance speed and quality.
+
+**Boot Sequence Behavior:**
+- First visit only (localStorage persists `hasSeenBootBefore`)
+- Both keypress AND click skip the sequence
+- Reduced motion preference skips entirely
+- Single orchestrator component (no separate animation primitives - YAGNI)
+- Uses existing `crt-power-on` CSS keyframe
+- Character-by-character typing for authenticity
+
+**Boot Sequence Timeline:**
+```
+0-400ms     CRT power-on effect (scaleY: 0.005 → 1)
+400-800ms   Black screen settles, cursor appears
+800-1400ms  Types: "> INITIALIZING AI-READY VAULT"
+1400-1800ms Types: "CLAUDE.MD: FOUND | PLUGINS: OK"
+1800-2000ms Brief screen flicker
+2000ms      Content hard-cut (NOT fade)
+2500-3000ms Full render complete
+```
+
+**Header:** Text-only `> AI-READY VAULT` with glow, static (not sticky), nav: Home/Guide/Downloads/About
+
+**Footer:** Minimal - Metatron Collective link + copyright year
+
+**PageWrapper:** Consistent padding/max-width/bg-void only - pages decide their own CRT treatment
+
+**Placeholders:** CommandHeader + "Coming soon" text in simple layout
+
+**Files to Create (8):**
+| File | Purpose |
+|------|---------|
+| `src/store/useBootStore.ts` | Zustand store with localStorage persistence |
+| `src/components/layout/BootSequence.tsx` | Boot animation orchestrator with built-in typing |
+| `src/components/layout/Header.tsx` | Navigation header with logo |
+| `src/components/layout/Footer.tsx` | Minimal footer |
+| `src/components/layout/PageWrapper.tsx` | Page container (padding/max-width) |
+| `src/app/guide/page.tsx` | Placeholder |
+| `src/app/downloads/page.tsx` | Placeholder |
+| `src/app/about/page.tsx` | Placeholder |
+
+**Files to Modify (2):**
+| File | Changes |
+|------|---------|
+| `src/app/layout.tsx` | Wrap with BootSequence, add Header/Footer |
+| `src/app/page.tsx` | Remove inline footer, adjust for PageWrapper |
+
+**State Shape:**
+```typescript
+interface BootStore {
+  isBootComplete: boolean;      // Current session
+  hasSeenBootBefore: boolean;   // Persisted to localStorage
+  skipBootSequence: () => void;
+  markBootComplete: () => void;
+}
+```
+
 ### Phase 3: Home Page
 **Linear:** [SG-152](https://linear.app/sherpagg/issue/SG-152/phase-3-home-page) | **Branch:** `sg-152-phase-3-home-page`
 
