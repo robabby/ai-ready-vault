@@ -1,26 +1,370 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =============================================================================
+   AI-READY VAULT DESIGN SYSTEM
+   P3 Amber Phosphor Terminal Aesthetic
+   ============================================================================= */
+
+@theme {
+  /* -------------------------------------------------------------------------
+     COLORS: Monochromatic Amber
+     ------------------------------------------------------------------------- */
+
+  /* Backgrounds (warm black, not blue-black) */
+  --color-void: #050508;
+  --color-bg: #0c0c12;
+  --color-elevated: #141419;
+  --color-surface: #1c1c24;
+  --color-code: #08080c;
+
+  /* P3 Phosphor Amber (aged, authentic) */
+  --color-phosphor-bright: #f5c96a;
+  --color-phosphor: #e8b04b;
+  --color-phosphor-dim: #a67c32;
+  --color-phosphor-ghost: rgba(232, 176, 75, 0.12);
+
+  /* Functional (sparingly used) */
+  --color-success: #7dce82;
+  --color-error: #e85c4a;
+
+  /* Text (warm whites, WCAG AA compliant) */
+  --color-text-bright: #f5f0e8;
+  --color-text: #d9d4c8;
+  --color-text-muted: #8a8577;
+
+  /* Structure */
+  --color-border: #2a2a32;
+  --color-border-bright: #3d3d48;
+
+  /* -------------------------------------------------------------------------
+     TYPOGRAPHY
+     ------------------------------------------------------------------------- */
+
+  --font-mono: var(--font-ibm-plex-mono), "JetBrains Mono", "Courier New", monospace;
+
+  /* Type scale (intentionally flat) */
+  --text-base: 1rem;
+  --text-loud: 1.125rem;
+  --text-quiet: 0.875rem;
+
+  /* -------------------------------------------------------------------------
+     SPACING (8px base unit)
+     ------------------------------------------------------------------------- */
+
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 1rem;
+  --spacing-4: 1.5rem;
+  --spacing-5: 2rem;
+  --spacing-6: 3rem;
+  --spacing-7: 4rem;
+  --spacing-8: 6rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* =============================================================================
+   BASE STYLES
+   ============================================================================= */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Text selection - inverted phosphor */
+::selection {
+  background-color: rgba(232, 176, 75, 0.25);
+  color: var(--color-text-bright);
+}
+
+/* Focus states */
+:focus-visible {
+  outline: 2px solid var(--color-phosphor);
+  outline-offset: 2px;
+  box-shadow: 0 0 12px var(--color-phosphor-ghost);
+}
+
+/* =============================================================================
+   CRT EFFECTS
+   ============================================================================= */
+
+/* Phosphor Glow (asymmetric bloom with color fringing) */
+.glow {
+  text-shadow:
+    0 0 2px var(--color-phosphor),
+    -1px 0 8px rgba(232, 176, 75, 0.8),
+    1px 0 12px rgba(245, 201, 106, 0.5),
+    0 0 30px var(--color-phosphor-ghost),
+    0 0 60px rgba(232, 176, 75, 0.15);
+}
+
+.glow-subtle {
+  text-shadow:
+    0 0 2px var(--color-phosphor),
+    0 0 8px var(--color-phosphor-ghost);
+}
+
+/* Scanlines */
+.scanlines {
+  position: relative;
+}
+
+.scanlines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 1px,
+    rgba(0, 0, 0, 0.15) 1px,
+    rgba(0, 0, 0, 0.15) 2px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Vignette */
+.vignette {
+  position: relative;
+}
+
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 80% at 50% 50%,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.3) 80%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+  pointer-events: none;
+  z-index: 11;
+}
+
+/* CSS-only grain effect */
+.grain {
+  position: relative;
+}
+
+.grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 12;
+  animation: grain-shift 0.5s steps(1) infinite;
+}
+
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, 2px); }
+}
+
+/* Screen curvature */
+.crt-curve {
+  border-radius: 20px / 25px;
+  overflow: hidden;
+  transform: perspective(1000px) rotateX(0.5deg);
+}
+
+/* CRT bezel */
+.crt-bezel {
+  padding: 20px;
+  background: linear-gradient(145deg, #2a2a3a, #1a1a2a, #0a0a15);
+  border-radius: 25px;
+  box-shadow:
+    inset 2px 2px 5px rgba(255, 255, 255, 0.05),
+    inset -2px -2px 5px rgba(0, 0, 0, 0.5),
+    0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Screen flicker */
+.crt-flicker {
+  animation: crt-flicker 8s ease-in-out infinite;
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.97; }
+  94% { opacity: 1; }
+}
+
+/* CRT Power-on */
+@keyframes crt-power-on {
+  0% {
+    filter: brightness(0);
+    transform: scaleY(0.005) scaleX(0.8);
+  }
+  10% {
+    filter: brightness(2);
+    transform: scaleY(0.005) scaleX(0.8);
+  }
+  30% { transform: scaleY(1.1) scaleX(0.95); }
+  50% { filter: brightness(1.5); }
+  100% {
+    filter: brightness(1);
+    transform: scaleY(1) scaleX(1);
+  }
+}
+
+/* =============================================================================
+   CURSOR ANIMATION
+   ============================================================================= */
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Stutter variant (called randomly via JS) */
+@keyframes blink-stutter {
+  0%, 30% { opacity: 1; }
+  31%, 40% { opacity: 0; }
+  41%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* =============================================================================
+   UTILITY CLASSES
+   ============================================================================= */
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Command header styling */
+.command-header {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-phosphor);
+}
+
+/* Terminal link */
+.terminal-link {
+  color: var(--color-phosphor-bright);
+  text-decoration: underline;
+  text-decoration-color: var(--color-phosphor-dim);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.terminal-link:hover {
+  text-decoration-color: var(--color-phosphor-bright);
+}
+
+/* =============================================================================
+   PERFORMANCE TIERS
+   ============================================================================= */
+
+/* Mobile (< 768px): Minimal - scanlines only */
+@media (max-width: 767px) {
+  .crt-curve {
+    transform: none !important;
+    border-radius: 12px;
+  }
+
+  .glow,
+  .glow-subtle {
+    text-shadow: none !important;
+    color: var(--color-phosphor-bright);
+  }
+
+  .grain::before {
+    display: none !important;
+  }
+
+  .vignette::after {
+    display: none !important;
+  }
+
+  .crt-bezel {
+    padding: 12px;
+    border-radius: 16px;
+  }
+}
+
+/* Tablet (768px - 1023px): Reduced - scanlines + vignette + subtle glow */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .glow {
+    text-shadow:
+      0 0 2px var(--color-phosphor),
+      0 0 12px var(--color-phosphor-ghost);
+  }
+
+  .grain::before {
+    opacity: 0.03;
+  }
+
+  .crt-curve {
+    transform: perspective(1000px) rotateX(0.25deg);
+  }
+
+  .crt-bezel {
+    padding: 16px;
+  }
+}
+
+/* Desktop (1024px+): Full effects - applied by default */
+
+/* =============================================================================
+   REDUCED MOTION
+   ============================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .grain::before {
+    display: none !important;
+  }
+
+  .crt-flicker {
+    animation: none !important;
+  }
+
+  [data-boot-sequence] {
+    opacity: 1 !important;
+  }
+}
+
+/* =============================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================================================= */
+
+.crt-screen {
+  contain: layout style paint;
+}
+
+/* Only apply will-change to actively animating element */
+.grain::before {
+  will-change: transform;
 }
