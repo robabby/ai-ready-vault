@@ -6,6 +6,7 @@ import { CRTScreen } from "@/components/ui/CRTScreen";
 import { Cursor } from "@/components/ui/Cursor";
 import { Link } from "@/components/ui/Link";
 import { cn } from "@/lib/cn";
+import { typeText } from "@/lib/animations";
 
 // Hero text content
 const HERO_TITLE = "Your Notes Become AI Memory";
@@ -150,34 +151,4 @@ function HeroContent({
       </div>
     </>
   );
-}
-
-/**
- * Types text character by character over a duration.
- * Returns a cleanup function to clear all pending timeouts.
- */
-function typeText(
-  text: string,
-  setter: (value: string) => void,
-  duration: number,
-  onComplete?: () => void
-): () => void {
-  const chars = text.split("");
-  const charDelay = duration / chars.length;
-  const timeouts: ReturnType<typeof setTimeout>[] = [];
-
-  chars.forEach((_, index) => {
-    const timeout = setTimeout(() => {
-      setter(text.slice(0, index + 1));
-      if (index === chars.length - 1 && onComplete) {
-        onComplete();
-      }
-    }, charDelay * index);
-    timeouts.push(timeout);
-  });
-
-  // Return cleanup function
-  return () => {
-    timeouts.forEach(clearTimeout);
-  };
 }
