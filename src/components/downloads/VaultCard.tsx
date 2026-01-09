@@ -3,7 +3,7 @@ import { TerminalBox } from "@/components/ui/TerminalBox";
 import { CommandHeader } from "@/components/ui/CommandHeader";
 import { cn } from "@/lib/cn";
 
-export interface TierInfo {
+export interface VaultInfo {
   name: string;
   description: string;
   fileCount: number;
@@ -14,44 +14,44 @@ export interface TierInfo {
   downloadPath: string;
 }
 
-interface TierCardProps {
-  tier: TierInfo;
+interface VaultCardProps {
+  vault: VaultInfo;
   /** Download button passed as children */
   children: ReactNode;
   className?: string;
 }
 
 /**
- * Displays a vault tier with details and download button.
+ * Displays a vault with details and download button.
  * Server component - compose with DownloadButton for interactivity.
  *
  * @example
- * <TierCard tier={minimalTier}>
- *   <DownloadButton tier={minimalTier} />
- * </TierCard>
+ * <VaultCard vault={vaultInfo}>
+ *   <DownloadButton vault={vaultInfo} />
+ * </VaultCard>
  */
-export function TierCard({ tier, children, className }: TierCardProps) {
+export function VaultCard({ vault, children, className }: VaultCardProps) {
   return (
     <TerminalBox
-      title={`${tier.name}.vault`}
+      title={`${vault.name.toLowerCase().replace(/\s+/g, "-")}.vault`}
       variant="elevated"
       className={cn("flex flex-col h-full", className)}
     >
       <CommandHeader level={3} glow={false}>
-        {tier.name}
+        {vault.name}
       </CommandHeader>
 
-      <p className="mt-3 text-text-muted text-sm">{tier.description}</p>
+      <p className="mt-3 text-text-muted text-sm">{vault.description}</p>
 
       {/* Stats row */}
       <div className="mt-4 flex gap-6 text-sm">
         <div>
           <span className="text-phosphor-dim">FILES:</span>{" "}
-          <span className="text-text-bright">{tier.fileCount}</span>
+          <span className="text-text-bright">{vault.fileCount}</span>
         </div>
         <div>
           <span className="text-phosphor-dim">SIZE:</span>{" "}
-          <span className="text-text-bright">{tier.fileSize}</span>
+          <span className="text-text-bright">{vault.fileSize}</span>
         </div>
       </div>
 
@@ -61,15 +61,15 @@ export function TierCard({ tier, children, className }: TierCardProps) {
           Includes:
         </div>
         <div className="font-mono text-xs text-text-muted space-y-0.5">
-          {tier.filePreview.map((file) => (
+          {vault.filePreview.map((file) => (
             <div key={file} className="truncate">
               <span className="text-phosphor-dim opacity-50">./</span>
               {file}
             </div>
           ))}
-          {tier.fileCount > tier.filePreview.length && (
+          {vault.fileCount > vault.filePreview.length && (
             <div className="text-text-muted opacity-60">
-              ...and {tier.fileCount - tier.filePreview.length} more
+              ...and {vault.fileCount - vault.filePreview.length} more
             </div>
           )}
         </div>

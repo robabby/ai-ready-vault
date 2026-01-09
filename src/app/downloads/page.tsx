@@ -2,100 +2,54 @@ import type { Metadata } from "next";
 import { PageWrapper } from "@/components/layout";
 import { CommandHeader } from "@/components/ui/CommandHeader";
 import { CRTScreen } from "@/components/ui/CRTScreen";
-import { TierCard, DownloadButton, type TierInfo } from "@/components/downloads";
+import { VaultCard, DownloadButton, type VaultInfo } from "@/components/downloads";
 
 export const metadata: Metadata = {
-  title: "Downloads",
+  title: "Download",
   description:
-    "Download AI-ready Obsidian vault starter templates. Choose from minimal, standard, or full configurations.",
+    "Download the AI-Ready Vault starter template for Obsidian.",
 };
 
 /**
- * Vault tier data.
- * File counts and sizes match the generated ZIPs.
+ * Vault data.
+ * File count and size match the generated ZIP.
  */
-const TIERS: TierInfo[] = [
-  {
-    name: "minimal",
-    description: "Essential structure only. Perfect for starting fresh with just the core folders and CLAUDE.md.",
-    fileCount: 14,
-    fileSize: "3 KB",
-    filePreview: [
-      "CLAUDE.md",
-      "Home.md",
-      "Inbox/",
-      "Projects/Active/",
-      "Projects/Backlog/",
-      "Areas/",
-      "Resources/",
-      "Archive/",
-    ],
-    downloadPath: "/vaults/minimal-vault.zip",
-  },
-  {
-    name: "standard",
-    description: "Structure + templates. Includes daily/weekly templates and AI memory folders for collaboration.",
-    fileCount: 26,
-    fileSize: "7 KB",
-    filePreview: [
-      "CLAUDE.md",
-      "Home.md",
-      "Templates/daily.md",
-      "Templates/weekly.md",
-      "Templates/project.md",
-      "Areas/AI/Memory/",
-      "Areas/AI/Collaboration/",
-      "Claude.backup.md",
-    ],
-    downloadPath: "/vaults/standard-vault.zip",
-  },
-  {
-    name: "full",
-    description: "Complete with examples. Everything including sample projects, filled templates, and example notes.",
-    fileCount: 50,
-    fileSize: "11 KB",
-    filePreview: [
-      "CLAUDE.md",
-      "Home.md",
-      "Projects/Active/Website-Redesign/",
-      "Areas/AI/Memory/Semantic/",
-      "Planner/2025/",
-      "Templates/session-log.md",
-      "Contacts/",
-      "Studio/",
-    ],
-    downloadPath: "/vaults/full-vault.zip",
-  },
-];
+const VAULT: VaultInfo = {
+  name: "AI-Ready Vault",
+  description:
+    "Complete starter vault with folder structure, templates, AI memory system, and skills library. Everything you need to begin collaborating with Claude.",
+  fileCount: 45,
+  fileSize: "30 KB",
+  filePreview: [
+    "CLAUDE.md",
+    "Home.md",
+    "Planner/Templates/",
+    "Areas/AI/Memory/",
+    "skills/",
+    "Projects/Active/",
+    "Resources/",
+    "Archive/",
+  ],
+  downloadPath: "/vaults/ai-ready-vault.zip",
+};
 
 export default function DownloadsPage() {
   return (
     <PageWrapper>
       <CRTScreen className="p-8 md:p-12" showBezel={false} forceMinimal>
-        <CommandHeader level={1}>Downloads</CommandHeader>
+        <CommandHeader level={1}>Download</CommandHeader>
 
         <p className="mt-6 text-text max-w-2xl">
-          Choose your starting point. Each tier builds on the previous,
-          adding more structure and examples. All include the essential{" "}
-          <span className="text-phosphor-bright">CLAUDE.md</span> file.
+          Get the complete AI-Ready Vault with folder structure, templates,
+          memory system, and skills library. Ready to open in Obsidian and start
+          collaborating with Claude.
         </p>
 
-        {/* Tier comparison note */}
-        <div className="mt-4 text-text-muted text-sm">
-          <span className="text-phosphor-dim">[TIP]</span> Start with{" "}
-          <span className="text-text-bright">minimal</span> if you prefer
-          building your own system, or{" "}
-          <span className="text-text-bright">full</span> to explore a
-          working example.
-        </div>
-
-        {/* Tier cards grid */}
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {TIERS.map((tier) => (
-            <TierCard key={tier.name} tier={tier}>
-              <DownloadButton tier={tier} />
-            </TierCard>
-          ))}
+        {/* Single vault card - centered with max-width */}
+        <div className="mt-10 max-w-lg mx-auto">
+          <VaultCard vault={VAULT}>
+            <DownloadButton vault={VAULT} />
+          </VaultCard>
         </div>
 
         {/* Usage instructions */}
@@ -107,19 +61,23 @@ export default function DownloadsPage() {
           <ol className="mt-4 space-y-2 text-text-muted">
             <li>
               <span className="text-phosphor-dim mr-2">1.</span>
-              <span className="text-text">Unzip</span> the vault to your desired location
+              <span className="text-text">Unzip</span> the vault to your desired
+              location
             </li>
             <li>
               <span className="text-phosphor-dim mr-2">2.</span>
-              <span className="text-text">Open the folder</span> in Obsidian as a new vault
+              <span className="text-text">Open the folder</span> in Obsidian as
+              a new vault
             </li>
             <li>
               <span className="text-phosphor-dim mr-2">3.</span>
-              <span className="text-text">Read CLAUDE.md</span> to understand the structure
+              <span className="text-text">Read CLAUDE.md</span> to understand
+              the structure
             </li>
             <li>
               <span className="text-phosphor-dim mr-2">4.</span>
-              <span className="text-text">Start collaborating</span> with Claude in your vault
+              <span className="text-text">Start collaborating</span> with Claude
+              in your vault
             </li>
           </ol>
         </div>

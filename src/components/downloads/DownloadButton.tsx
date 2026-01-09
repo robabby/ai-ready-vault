@@ -3,13 +3,13 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { DownloadAnimation } from "./DownloadAnimation";
-import type { TierInfo } from "./TierCard";
+import type { VaultInfo } from "./VaultCard";
 import { cn } from "@/lib/cn";
 
 type DownloadState = "idle" | "downloading" | "complete";
 
 interface DownloadButtonProps {
-  tier: TierInfo;
+  vault: VaultInfo;
   className?: string;
 }
 
@@ -23,7 +23,7 @@ interface DownloadButtonProps {
  *
  * Reduced motion: skips animation, triggers download immediately
  */
-export function DownloadButton({ tier, className }: DownloadButtonProps) {
+export function DownloadButton({ vault, className }: DownloadButtonProps) {
   const reducedMotion = useReducedMotion();
   const [state, setState] = useState<DownloadState>("idle");
   const downloadLinkRef = useRef<HTMLAnchorElement>(null);
@@ -69,25 +69,28 @@ export function DownloadButton({ tier, className }: DownloadButtonProps) {
     }, 2000);
   }, [triggerDownload]);
 
+  // Generate filename from vault name
+  const filename = `${vault.name.toLowerCase().replace(/\s+/g, "-")}.zip`;
+
   return (
     <div className={cn("relative", className)}>
       {/* Hidden download link */}
       <a
         ref={downloadLinkRef}
-        href={tier.downloadPath}
-        download={`${tier.name}-vault.zip`}
+        href={vault.downloadPath}
+        download={filename}
         className="sr-only"
         tabIndex={-1}
         aria-hidden="true"
       >
-        Download {tier.name} vault
+        Download {vault.name}
       </a>
 
       {/* Show animation during downloading state */}
       {state === "downloading" && (
         <DownloadAnimation
-          tierName={tier.name}
-          fileCount={tier.fileCount}
+          vaultName={vault.name}
+          fileCount={vault.fileCount}
           onComplete={handleAnimationComplete}
           className="mb-4"
         />
@@ -105,12 +108,12 @@ export function DownloadButton({ tier, className }: DownloadButtonProps) {
           state === "downloading" && "bg-surface border-border text-text-muted cursor-wait",
           state === "complete" && "bg-success/20 border-success/40 text-success"
         )}
-        aria-describedby={`download-${tier.name}-desc`}
+        aria-describedby="download-vault-desc"
       >
         {state === "idle" && (
           <>
             <span className="text-phosphor-dim mr-2">&gt;</span>
-            DOWNLOAD {tier.name.toUpperCase()}
+            DOWNLOAD VAULT
           </>
         )}
         {state === "downloading" && (
@@ -128,8 +131,8 @@ export function DownloadButton({ tier, className }: DownloadButtonProps) {
       </button>
 
       {/* Hidden description for screen readers */}
-      <span id={`download-${tier.name}-desc`} className="sr-only">
-        Download the {tier.name} vault containing {tier.fileCount} files ({tier.fileSize})
+      <span id="download-vault-desc" className="sr-only">
+        Download the {vault.name} containing {vault.fileCount} files ({vault.fileSize})
       </span>
     </div>
   );

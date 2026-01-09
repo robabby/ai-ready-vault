@@ -2,14 +2,13 @@
 /**
  * Vault ZIP Generator
  *
- * Generates downloadable ZIP archives for each vault tier.
+ * Generates the AI-Ready Vault ZIP archive.
  * Run with: pnpm build-vaults
  */
 
 import { readFile, readdir, stat, ensureDir, pathExists } from "fs-extra";
 import path from "path";
 import { minimatch } from "minimatch";
-import { vaultTiers, config, type VaultTier } from "../vault-tiers.config";
 import {
   createZipArchive,
   addFileToArchive,
@@ -21,8 +20,10 @@ import {
 } from "./lib/template-replacer";
 
 const ROOT_DIR = process.cwd();
-const SOURCE_DIR = path.join(ROOT_DIR, config.sourceDir);
-const OUTPUT_DIR = path.join(ROOT_DIR, config.outputDir);
+const SOURCE_DIR = path.join(ROOT_DIR, "vault-source");
+const OUTPUT_DIR = path.join(ROOT_DIR, "public/vaults");
+const OUTPUT_FILENAME = "ai-ready-vault.zip";
+const EXCLUDE_PATTERNS = [".DS_Store", "**/.DS_Store"];
 
 /**
  * Recursively get all files in a directory
@@ -47,49 +48,23 @@ async function getAllFiles(dir: string, base: string = ""): Promise<string[]> {
 }
 
 /**
- * Check if a file matches any pattern in the list
+ * Check if a file matches any exclusion pattern
  */
-function matchesPatterns(file: string, patterns: string[]): boolean {
-  return patterns.some((pattern) =>
+function isExcluded(file: string): boolean {
+  return EXCLUDE_PATTERNS.some((pattern) =>
     minimatch(file, pattern, { matchBase: true })
   );
 }
 
 /**
- * Get files for a specific tier
+ * Build the vault ZIP archive
  */
-async function getFilesForTier(
-  allFiles: string[],
-  tier: VaultTier
-): Promise<string[]> {
-  // For explicit file lists (minimal and standard tiers)
-  if (!tier.include.includes("**/*")) {
-    return tier.include.filter((pattern) => {
-      // Check if it's an exact file match
-      return allFiles.includes(pattern);
-    });
-  }
+async function buildVault(allFiles: string[]): Promise<void> {
+  console.log("\n  Building AI-Ready Vault...");
 
-  // For glob patterns (full tier)
-  let files = allFiles;
-
-  // Apply exclusions
-  if (tier.exclude && tier.exclude.length > 0) {
-    files = files.filter((file) => !matchesPatterns(file, tier.exclude!));
-  }
-
-  return files;
-}
-
-/**
- * Build a single vault tier
- */
-async function buildTier(tier: VaultTier, allFiles: string[]): Promise<void> {
-  console.log(`\n  Building ${tier.name} vault...`);
-
-  const files = await getFilesForTier(allFiles, tier);
-  const outputPath = path.join(OUTPUT_DIR, tier.outputFileName);
-  const baseName = tier.outputFileName.replace(".zip", "");
+  const files = allFiles.filter((file) => !isExcluded(file));
+  const outputPath = path.join(OUTPUT_DIR, OUTPUT_FILENAME);
+  const baseName = "ai-ready-vault";
 
   const { archive, finalize } = createZipArchive({
     outputPath,
@@ -102,14 +77,16 @@ async function buildTier(tier: VaultTier, allFiles: string[]): Promise<void> {
     const fullPath = path.join(SOURCE_DIR, file);
     let content: string | Buffer;
 
-    // Read file content
     const fileStat = await stat(fullPath);
     if (fileStat.isFile()) {
       const rawContent = await readFile(fullPath);
 
       // Apply template replacement for text files
       if (file.endsWith(".md") || file.endsWith(".json")) {
-        content = replaceTemplateValues(rawContent.toString("utf-8"), templateValues);
+        content = replaceTemplateValues(
+          rawContent.toString("utf-8"),
+          templateValues
+        );
       } else {
         content = rawContent;
       }
@@ -129,9 +106,9 @@ async function buildTier(tier: VaultTier, allFiles: string[]): Promise<void> {
  * Main build function
  */
 async function main(): Promise<void> {
-  console.log("Building vault archives...");
-  console.log(`  Source: ${config.sourceDir}`);
-  console.log(`  Output: ${config.outputDir}`);
+  console.log("Building vault archive...");
+  console.log(`  Source: vault-source`);
+  console.log(`  Output: public/vaults`);
 
   // Verify source directory exists
   if (!(await pathExists(SOURCE_DIR))) {
@@ -146,10 +123,8 @@ async function main(): Promise<void> {
   const allFiles = await getAllFiles(SOURCE_DIR);
   console.log(`\n  Found ${allFiles.length} source files`);
 
-  // Build each tier
-  for (const tier of vaultTiers) {
-    await buildTier(tier, allFiles);
-  }
+  // Build the vault
+  await buildVault(allFiles);
 
   console.log("\nDone!");
 }
