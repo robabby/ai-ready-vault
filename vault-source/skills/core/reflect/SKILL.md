@@ -66,6 +66,17 @@ Consider:
 
 - `$ARGUMENTS` (optional): Focus area for reflection
 
+## Default Paths
+
+- **Memory files**: `Areas/AI/Memory/{Type}/YYYY-MM-DD - {Brief Title}.md`
+- **Session logs**: `Areas/AI/Collaboration/Sessions/YYYY-MM-DD - {Topic}.md`
+
+## Related Skills
+
+- `/hydrate` - Session start counterpart
+- `/remember` - Store individual memories during session
+- `/session-end` - Combined workflow including reflect
+
 ## Output Format
 
 - Brief summary of session work

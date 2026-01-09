@@ -1,6 +1,6 @@
 ---
 name: daily-note
-description: Work with Obsidian daily notes. Create today's note if missing, append content to existing note, or read current daily note. Uses Obsidian's periodic notes conventions.
+description: Work with Obsidian daily notes. Create today's note if missing, append content to existing note, or read current daily note. Uses Obsidian's periodic notes conventions. Requires Obsidian MCP server.
 ---
 
 # Daily Note

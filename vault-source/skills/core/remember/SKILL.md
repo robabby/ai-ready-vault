@@ -63,6 +63,16 @@ source: {session|explicit}
 
 - `$ARGUMENTS` (optional): The content to remember. If not provided, prompt user.
 
+## Default Paths
+
+Memory files are created at: `Areas/AI/Memory/{Type}/YYYY-MM-DD - {Brief Title}.md`
+
+## Related Skills
+
+- `/recall {terms}` - Search for stored memories
+- `/reflect` - Batch memory creation at session end
+- `/glean` - Surface patterns across memories
+
 ## Example
 
 User: `/remember The decision to use terminal/modern contrast for the AI Ready Vault website`

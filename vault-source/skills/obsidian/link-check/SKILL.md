@@ -1,6 +1,6 @@
 ---
 name: link-check
-description: Validate wiki-links in an Obsidian vault. Finds broken links that don't resolve to real files, orphaned notes with no incoming links, and link health statistics. Use for vault maintenance and cleanup.
+description: Validate wiki-links in an Obsidian vault. Finds broken links that don't resolve to real files, orphaned notes with no incoming links, and link health statistics. Use for vault maintenance and cleanup. Works with or without Obsidian MCP.
 ---
 
 # Link Check
