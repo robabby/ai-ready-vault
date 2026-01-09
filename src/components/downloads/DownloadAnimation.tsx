@@ -26,8 +26,8 @@ const FOLDER_CLOSED = `
 const FILES = ["CLAUDE.md", "Home.md", "Templates/", "Memory/", ".obsidian/"];
 
 interface DownloadAnimationProps {
-  /** Tier name for display */
-  tierName: string;
+  /** Vault name for display */
+  vaultName: string;
   /** File count for display */
   fileCount: number;
   /** Duration in ms (default 2500) */
@@ -46,7 +46,7 @@ interface DownloadAnimationProps {
  * - Reduced motion: shows completion state immediately
  */
 export function DownloadAnimation({
-  tierName,
+  vaultName,
   fileCount,
   duration = 2500,
   onComplete,
@@ -127,7 +127,7 @@ export function DownloadAnimation({
       aria-valuenow={isComplete ? 100 : Math.round((currentFileIndex + 1) / FILES.length * 100)}
       aria-valuemin={0}
       aria-valuemax={100}
-      aria-label={`Downloading ${tierName} vault`}
+      aria-label={`Downloading ${vaultName}`}
     >
       {/* Screen reader status */}
       <div className="sr-only" aria-live="polite">
@@ -143,7 +143,7 @@ export function DownloadAnimation({
           {"> "}
           <span className="text-phosphor">DOWNLOADING</span>
           {" "}
-          <span className="text-text-bright">{tierName.toUpperCase()}</span>
+          <span className="text-text-bright">{vaultName.toUpperCase()}</span>
         </div>
 
         {/* Folder ASCII art */}
