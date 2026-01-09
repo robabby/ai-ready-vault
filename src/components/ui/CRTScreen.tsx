@@ -8,6 +8,8 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 interface CRTScreenProps {
   children: ReactNode;
   className?: string;
+  /** HTML id attribute for anchor linking */
+  id?: string;
   /** Show CRT bezel frame. Default: true */
   showBezel?: boolean;
   /**
@@ -35,6 +37,7 @@ interface CRTScreenProps {
 export function CRTScreen({
   children,
   className,
+  id,
   showBezel = true,
   forceMinimal = false,
 }: CRTScreenProps) {
@@ -52,6 +55,7 @@ export function CRTScreen({
 
   const screenContent = (
     <div
+      id={id}
       className={cn(
         "crt-screen relative overflow-hidden bg-bg",
         showCurvature && "crt-curve",

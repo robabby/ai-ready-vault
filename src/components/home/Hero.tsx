@@ -8,13 +8,14 @@ import { Link } from "@/components/ui/Link";
 import { cn } from "@/lib/cn";
 
 // Hero text content
-const HERO_TITLE = "Build an AI-Ready Vault";
-const HERO_SUBTITLE = "Structure your Obsidian vault for optimal AI collaboration.";
+const HERO_TITLE = "Your Notes Become AI Memory";
+const HERO_SUBTITLE =
+  "Every conversation with Claude starts from zero. Unless your vault is structured for comprehension.";
 
 // Animation timing (ms)
 const TITLE_DURATION = 800;
 const SUBTITLE_DELAY = 200;
-const SUBTITLE_DURATION = 600;
+const SUBTITLE_DURATION = 1000; // Increased for longer subtitle
 
 /**
  * Hero section with typing animation.
@@ -139,17 +140,12 @@ function HeroContent({
         {!isTypingTitle && showCursor && <Cursor />}
       </p>
 
-      <p className="mt-4 text-text-muted">
-        A documentation site explaining AI-ready vaults with downloadable
-        starter templates.
-      </p>
-
       <div className="mt-8 flex flex-wrap gap-4">
-        <Link href="/guide" className="text-lg">
-          Read the Guide
+        <Link href="#demo" className="text-lg">
+          Watch the Demo
         </Link>
         <Link href="/downloads" className="text-lg">
-          Download Vaults
+          Download the Vault
         </Link>
       </div>
     </>
