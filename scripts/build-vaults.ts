@@ -6,7 +6,14 @@
  * Run with: pnpm build-vaults
  */
 
-import { readFile, readdir, stat, ensureDir, pathExists } from "fs-extra";
+import {
+  readFile,
+  readdir,
+  stat,
+  ensureDir,
+  pathExists,
+  writeJson,
+} from "fs-extra";
 import path from "path";
 import { minimatch } from "minimatch";
 import {
@@ -23,7 +30,15 @@ const ROOT_DIR = process.cwd();
 const SOURCE_DIR = path.join(ROOT_DIR, "vault-source");
 const OUTPUT_DIR = path.join(ROOT_DIR, "public/vaults");
 const OUTPUT_FILENAME = "ai-ready-vault.zip";
+const METADATA_FILENAME = "vault-metadata.json";
 const EXCLUDE_PATTERNS = [".DS_Store", "**/.DS_Store"];
+
+/** Metadata exported for use by the downloads page */
+export interface VaultMetadata {
+  fileCount: number;
+  fileSize: string;
+  generatedAt: string;
+}
 
 /**
  * Recursively get all files in a directory
@@ -59,7 +74,7 @@ function isExcluded(file: string): boolean {
 /**
  * Build the vault ZIP archive
  */
-async function buildVault(allFiles: string[]): Promise<void> {
+async function buildVault(allFiles: string[]): Promise<VaultMetadata> {
   console.log("\n  Building AI-Ready Vault...");
 
   const files = allFiles.filter((file) => !isExcluded(file));
@@ -96,10 +111,17 @@ async function buildVault(allFiles: string[]): Promise<void> {
   }
 
   const result = await finalize();
+  const fileSize = formatBytes(result.totalBytes);
 
   console.log(`    Files: ${result.fileCount}`);
-  console.log(`    Size: ${formatBytes(result.totalBytes)}`);
+  console.log(`    Size: ${fileSize}`);
   console.log(`    Output: ${path.relative(ROOT_DIR, result.outputPath)}`);
+
+  return {
+    fileCount: result.fileCount,
+    fileSize,
+    generatedAt: new Date().toISOString(),
+  };
 }
 
 /**
@@ -123,8 +145,13 @@ async function main(): Promise<void> {
   const allFiles = await getAllFiles(SOURCE_DIR);
   console.log(`\n  Found ${allFiles.length} source files`);
 
-  // Build the vault
-  await buildVault(allFiles);
+  // Build the vault and get metadata
+  const metadata = await buildVault(allFiles);
+
+  // Write metadata for the downloads page
+  const metadataPath = path.join(OUTPUT_DIR, METADATA_FILENAME);
+  await writeJson(metadataPath, metadata, { spaces: 2 });
+  console.log(`\n  Metadata: ${path.relative(ROOT_DIR, metadataPath)}`);
 
   console.log("\nDone!");
 }

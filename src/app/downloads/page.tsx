@@ -4,6 +4,7 @@ import { CommandHeader } from "@/components/ui/CommandHeader";
 import { CRTScreen } from "@/components/ui/CRTScreen";
 import { VaultCard, DownloadButton, type VaultInfo } from "@/components/downloads";
 import Link from "next/link";
+import vaultMetadata from "@/../public/vaults/vault-metadata.json";
 
 export const metadata: Metadata = {
   title: "Download",
@@ -13,14 +14,14 @@ export const metadata: Metadata = {
 
 /**
  * Vault data.
- * File count and size match the generated ZIP.
+ * File count and size come from generated vault-metadata.json.
  */
 const VAULT: VaultInfo = {
   name: "AI-Ready Vault",
   description:
     "Complete starter vault with folder structure, templates, AI memory system, and skills library. Everything you need to begin collaborating with Claude.",
-  fileCount: 45,
-  fileSize: "30 KB",
+  fileCount: vaultMetadata.fileCount,
+  fileSize: vaultMetadata.fileSize,
   filePreview: [
     "CLAUDE.md",
     "Home.md",
