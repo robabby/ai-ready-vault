@@ -1,0 +1,270 @@
+import { PageWrapper } from "@/components/layout";
+import { CommandHeader } from "@/components/ui/CommandHeader";
+import { CRTScreen } from "@/components/ui/CRTScreen";
+import Link from "next/link";
+
+export const metadata = {
+  title: "Your First AI Session",
+  description: "Step-by-step tutorial for your first AI collaboration session with Claude Code and your AI-ready vault.",
+};
+
+<PageWrapper>
+<CRTScreen className="p-4 pt-3" showBezel={false} forceMinimal>
+<CommandHeader level={1}>Your First AI Session</CommandHeader>
+
+<p className="mt-4 text-text max-w-2xl">
+  This tutorial walks you through your first complete session with Claude Code and your AI-ready vault. In about 10 minutes, you'll experience the full workflow: loading context, collaborating, and preserving knowledge for next time.
+</p>
+
+<nav className="mt-6 mb-8 p-4 border border-border rounded-lg bg-elevated">
+  <p className="text-phosphor-dim text-sm uppercase tracking-wide mb-3"># Steps</p>
+  <ul className="space-y-2 text-sm">
+    <li><a href="#prerequisites" className="terminal-link">Prerequisites</a></li>
+    <li><a href="#step-1-open-your-vault" className="terminal-link">Step 1: Open Your Vault</a></li>
+    <li><a href="#step-2-launch-claude-code" className="terminal-link">Step 2: Launch Claude Code</a></li>
+    <li><a href="#step-3-hydrate-your-session" className="terminal-link">Step 3: Hydrate Your Session</a></li>
+    <li><a href="#step-4-explore-your-vault" className="terminal-link">Step 4: Explore Your Vault</a></li>
+    <li><a href="#step-5-create-your-first-memory" className="terminal-link">Step 5: Create Your First Memory</a></li>
+    <li><a href="#step-6-end-your-session" className="terminal-link">Step 6: End Your Session</a></li>
+    <li><a href="#step-7-success" className="terminal-link">Step 7: Success</a></li>
+  </ul>
+</nav>
+
+<article className="prose">
+
+## Prerequisites
+
+Before starting, make sure you have:
+
+- **Downloaded the vault** from the [downloads page](/downloads) and unzipped it
+- **Obsidian** installed ([obsidian.md](https://obsidian.md))
+- **Claude Code** installed (`npm install -g @anthropic-ai/claude-code`)
+
+## Step 1: Open Your Vault
+
+First, open the downloaded vault in Obsidian.
+
+1. Unzip the downloaded `ai-ready-vault.zip` file
+2. Open Obsidian
+3. Click "Open folder as vault"
+4. Navigate to the unzipped folder and select it
+
+You should see the vault structure with folders like `Areas/`, `Projects/`, and files like `CLAUDE.md` and `Home.md`.
+
+```
+Output
+ai-ready-vault/
+├── CLAUDE.md
+├── Home.md
+├── Areas/
+│   └── AI/
+│       ├── Memory/
+│       └── Collaboration/
+├── Projects/
+├── Resources/
+└── skills/
+```
+
+Take a moment to explore. Open `CLAUDE.md` to see how the vault introduces itself to Claude.
+
+## Step 2: Launch Claude Code
+
+Open your terminal and navigate to the vault directory.
+
+```bash
+cd ~/path/to/ai-ready-vault
+```
+
+Then start Claude Code:
+
+```bash
+claude
+```
+
+Claude Code automatically reads the `CLAUDE.md` file in the current directory. This gives Claude immediate context about your vault's structure, purpose, and working agreements.
+
+```
+Output
+╭─────────────────────────────────────────────────────╮
+│ Claude Code                                         │
+│ /help for commands                                  │
+╰─────────────────────────────────────────────────────╯
+
+>
+```
+
+You're now ready to collaborate.
+
+## Step 3: Hydrate Your Session
+
+The `/hydrate` skill loads relevant context at the start of a session. Run it now:
+
+```
+/hydrate
+```
+
+On your first session, hydration will be minimal since there's no session history yet. That's expected.
+
+```
+Output
+Using skill: hydrate
+
+Checking vault context...
+✓ CLAUDE.md loaded
+✓ Memory system structure found
+✓ No recent sessions (this is your first!)
+
+Ready to collaborate. This vault is set up for AI-assisted knowledge
+management with a memory system for cross-session persistence.
+
+What would you like to work on?
+```
+
+As you use the vault more, `/hydrate` will load recent sessions, relevant memories, and ongoing work context.
+
+## Step 4: Explore Your Vault
+
+Now ask Claude a question about the vault. This demonstrates how Claude can read and navigate the structure.
+
+```
+What's in this vault? Give me a quick overview.
+```
+
+Claude will read through the key files and summarize:
+
+```
+Output
+Let me explore the vault structure...
+
+Reading: CLAUDE.md
+Reading: Home.md
+Reading: Areas/AI/Memory/
+
+This AI-ready vault is set up for knowledge management with
+AI collaboration. Key areas:
+
+• Projects/ - Active, backlog, and completed work
+• Areas/AI/Memory/ - Long-term memory storage (Episodic,
+  Semantic, Procedural, Strategic)
+• Resources/ - Reference material
+• skills/ - 13 skills for session management (/hydrate,
+  /remember, /recall, /reflect, etc.)
+
+The vault follows a modified PARA structure optimized for
+AI navigation. CLAUDE.md provides working agreements and
+current focus.
+```
+
+This is the power of an AI-ready vault—Claude understands the structure without you explaining it each time.
+
+## Step 5: Create Your First Memory
+
+The `/remember` skill stores information for future sessions. Let's create your first memory:
+
+```
+/remember I completed the first-session tutorial and my vault is working correctly
+```
+
+Claude will create a memory file with proper categorization:
+
+```
+Output
+Using skill: remember
+
+Creating memory...
+
+Type: Episodic (a specific event/experience)
+Importance: 0.6 (moderately significant milestone)
+Concepts: [first-session, setup, tutorial, vault-working]
+
+Created: Areas/AI/Memory/Episodic/2024-01-15 - First Session Complete.md
+
+✓ Memory stored successfully
+
+This memory will be available in future sessions when you
+run /hydrate or /recall.
+```
+
+Open Obsidian and check `Areas/AI/Memory/Episodic/`—you'll see the new file with frontmatter metadata and your memory content.
+
+## Step 6: End Your Session
+
+The `/reflect` skill captures session learnings before you close out. Run it now:
+
+```
+/reflect
+```
+
+Claude reviews what happened and creates appropriate memories:
+
+```
+Output
+Using skill: reflect
+
+Reviewing session...
+
+Session Summary:
+• Completed first-session tutorial
+• Explored vault structure
+• Created first memory
+• Learned hydrate → work → reflect cycle
+
+Memories to preserve:
+✓ Episodic: First session complete (already stored)
+
+No additional memories needed—the key learning (first session
+complete) was already captured.
+
+Session preserved. Next time you run /hydrate, this context
+will be available.
+```
+
+The reflect skill is smart—it won't create duplicate memories if you've already captured the important points.
+
+## Step 7: Success
+
+You've completed your first AI-ready session. Here's what you accomplished:
+
+1. **Opened your vault** in Obsidian
+2. **Launched Claude Code** with automatic context from CLAUDE.md
+3. **Hydrated** to load session context (minimal on first run)
+4. **Explored** the vault structure with Claude
+5. **Created a memory** that persists across sessions
+6. **Reflected** to capture session learnings
+
+### The Session Cycle
+
+You've now experienced the core workflow:
+
+```
+┌─────────────────────────────────────────────────────┐
+│                                                     │
+│   /hydrate  →  work  →  /remember  →  /reflect     │
+│       ↑                                    │        │
+│       └────────────────────────────────────┘        │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+```
+
+Each session builds on the last. Memories accumulate. Context deepens.
+
+### Next Steps
+
+Now that your vault is working:
+
+- **Customize CLAUDE.md** with your actual name, projects, and preferences
+- **Explore other skills** in the `skills/` folder (`/recall`, `/glean`, `/evaluate-vault`)
+- **Create project notes** in `Projects/Active/` and reference them in sessions
+- **Read the full guide** at [/guide](/guide) for deeper understanding
+
+Your notes are now AI memory. Happy collaborating.
+
+---
+
+<p className="text-text-muted mt-8">
+  Questions? Check the <Link href="/guide" className="terminal-link">full guide</Link> or explore the skills in your vault's <code className="text-phosphor-dim">skills/</code> folder.
+</p>
+
+</article>
+</CRTScreen>
+</PageWrapper>

@@ -3,6 +3,7 @@ import { PageWrapper } from "@/components/layout";
 import { CommandHeader } from "@/components/ui/CommandHeader";
 import { CRTScreen } from "@/components/ui/CRTScreen";
 import { VaultCard, DownloadButton, type VaultInfo } from "@/components/downloads";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Download",
@@ -80,6 +81,27 @@ export default function DownloadsPage() {
               in your vault
             </li>
           </ol>
+        </div>
+
+        {/* Next Steps CTA */}
+        <div className="mt-12 pt-8 border-t border-border">
+          <CommandHeader level={2} glow={false}>
+            Ready to Begin?
+          </CommandHeader>
+
+          <p className="mt-4 text-text-muted max-w-xl">
+            Follow our step-by-step tutorial for your first AI collaboration
+            session. Learn the hydrate → work → reflect cycle hands-on.
+          </p>
+
+          <Link
+            href="/guide/first-session"
+            className="mt-6 inline-flex items-center gap-2 text-phosphor-bright hover:text-phosphor transition-colors"
+          >
+            <span className="text-phosphor-dim">&gt;</span>
+            Your First AI Session
+            <span className="text-phosphor-dim">→</span>
+          </Link>
         </div>
       </CRTScreen>
     </PageWrapper>
