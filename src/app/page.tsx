@@ -1,5 +1,5 @@
 import { PageWrapper } from "@/components/layout";
-import { Hero, FolderTree, FeatureCard, OpeningHookDemo, BeforeAfter } from "@/components/home";
+import { Hero, FolderTree, FeatureCard, OpeningHookDemo, BeforeAfter, ObjectionHandling } from "@/components/home";
 
 export default function Home() {
   return (
@@ -47,6 +47,9 @@ export default function Home() {
 
         {/* Before/After Comparison */}
         <BeforeAfter />
+
+        {/* Objection Handling */}
+        <ObjectionHandling />
       </div>
     </PageWrapper>
   );
