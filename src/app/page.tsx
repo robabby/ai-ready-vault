@@ -1,8 +1,5 @@
 import { PageWrapper } from "@/components/layout";
-import { Hero, FolderTree, FeatureCard } from "@/components/home";
-import { CRTScreen } from "@/components/ui/CRTScreen";
-import { CommandHeader } from "@/components/ui/CommandHeader";
-import { Cursor } from "@/components/ui/Cursor";
+import { Hero, FolderTree, FeatureCard, OpeningHookDemo } from "@/components/home";
 
 export default function Home() {
   return (
@@ -46,23 +43,7 @@ export default function Home() {
         <FolderTree />
 
         {/* Demo Section - anchor target for "Watch the Demo" CTA */}
-        <CRTScreen id="demo" forceMinimal showBezel={false} className="p-6">
-          <CommandHeader level={2}>System Check</CommandHeader>
-          <div className="mt-4 font-mono space-y-1">
-            <p>
-              <span className="text-phosphor-dim">$</span>{" "}
-              <span className="text-text">checking vault status...</span>
-            </p>
-            <p className="text-success">CLAUDE.MD: FOUND</p>
-            <p className="text-success">MEMORY SYSTEM: ACTIVE</p>
-            <p className="text-success">PLUGINS: OK</p>
-            <p className="text-phosphor">
-              <span className="text-phosphor-dim">&gt;</span> READY FOR
-              COLLABORATION
-              <Cursor />
-            </p>
-          </div>
-        </CRTScreen>
+        <OpeningHookDemo />
       </div>
     </PageWrapper>
   );
