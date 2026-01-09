@@ -45,8 +45,8 @@ export default function Home() {
         {/* Folder Tree */}
         <FolderTree />
 
-        {/* Demo Section */}
-        <CRTScreen forceMinimal showBezel={false} className="p-6">
+        {/* Demo Section - anchor target for "Watch the Demo" CTA */}
+        <CRTScreen id="demo" forceMinimal showBezel={false} className="p-6">
           <CommandHeader level={2}>System Check</CommandHeader>
           <div className="mt-4 font-mono space-y-1">
             <p>
