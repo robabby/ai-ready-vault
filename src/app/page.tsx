@@ -1,5 +1,5 @@
 import { PageWrapper } from "@/components/layout";
-import { Hero, FolderTree, FeatureCard, OpeningHookDemo } from "@/components/home";
+import { Hero, FolderTree, FeatureCard, OpeningHookDemo, BeforeAfter } from "@/components/home";
 
 export default function Home() {
   return (
@@ -44,6 +44,9 @@ export default function Home() {
 
         {/* Demo Section - anchor target for "Watch the Demo" CTA */}
         <OpeningHookDemo />
+
+        {/* Before/After Comparison */}
+        <BeforeAfter />
       </div>
     </PageWrapper>
   );
