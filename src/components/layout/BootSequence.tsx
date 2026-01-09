@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback, type ReactNode } from "react";
 import { useBootStore } from "@/store/useBootStore";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { typeText } from "@/lib/animations";
 
 interface BootSequenceProps {
   children: ReactNode;
@@ -234,30 +235,4 @@ export function BootSequence({ children }: BootSequenceProps) {
       )}
     </div>
   );
-}
-
-/**
- * Types text character by character over a duration.
- * Returns a cleanup function to clear all pending timeouts.
- */
-function typeText(
-  text: string,
-  setter: (value: string) => void,
-  duration: number
-): () => void {
-  const chars = text.split("");
-  const charDelay = duration / chars.length;
-  const timeouts: ReturnType<typeof setTimeout>[] = [];
-
-  chars.forEach((_, index) => {
-    const timeout = setTimeout(() => {
-      setter(text.slice(0, index + 1));
-    }, charDelay * index);
-    timeouts.push(timeout);
-  });
-
-  // Return cleanup function
-  return () => {
-    timeouts.forEach(clearTimeout);
-  };
 }
