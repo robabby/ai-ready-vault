@@ -33,6 +33,12 @@ Load vault context to orient at session start.
 
 - `$ARGUMENTS` (optional): Topic to focus hydration on (e.g., "project X" or "memory system")
 
+## Default Paths
+
+- **CLAUDE.md**: Vault root
+- **Session logs**: `Areas/AI/Collaboration/Sessions/`
+- **Memory system**: `Areas/AI/Memory/`
+
 ## Output Format
 
 Brief summary (3-5 sentences) of:
@@ -40,6 +46,12 @@ Brief summary (3-5 sentences) of:
 - Recent work context
 - Relevant memories loaded
 - Suggested focus or pending items
+
+## Related Skills
+
+- `/reflect` - End-of-session counterpart to hydrate
+- `/recall {terms}` - Search for specific memories
+- `/session-start` - Combined startup workflow including hydrate
 
 ## Example
 

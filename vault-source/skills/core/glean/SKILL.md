@@ -53,6 +53,16 @@ Individual memories capture discrete information. Gleaning reveals:
 
 - `$ARGUMENTS` (optional): Domain or topic to focus analysis on
 
+## Default Paths
+
+Analyzes memories at: `Areas/AI/Memory/`
+
+## Related Skills
+
+- `/recall {terms}` - Search for specific memories
+- `/remember` - Store patterns discovered as new memories
+- `/reflect` - Session-end memory consolidation
+
 ## Output Format
 
 **Patterns Observed**:

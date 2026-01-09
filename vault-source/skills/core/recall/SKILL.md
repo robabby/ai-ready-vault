@@ -41,6 +41,16 @@ Areas/AI/Memory/
 
 - `$ARGUMENTS` (required): Search terms or concepts to find
 
+## Default Paths
+
+Searches the memory system at: `Areas/AI/Memory/`
+
+## Related Skills
+
+- `/remember` - Store new memories
+- `/hydrate` - Load recent relevant memories at session start
+- `/glean` - Discover patterns across memories
+
 ## Search Patterns
 
 ```bash
