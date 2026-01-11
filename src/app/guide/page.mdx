@@ -1,6 +1,7 @@
 import { PageWrapper } from "@/components/layout";
 import { CommandHeader } from "@/components/ui/CommandHeader";
 import { CRTScreen } from "@/components/ui/CRTScreen";
+import { InfoCallout } from "@/components/ui/InfoCallout";
 
 export const metadata = {
   title: "Guide",
@@ -9,17 +10,15 @@ export const metadata = {
 
 <PageWrapper>
 <CRTScreen className="p-4 pt-3" showBezel={false} forceMinimal>
-<CommandHeader level={1}>Guide</CommandHeader>
+<CommandHeader level={1} glow>Guide</CommandHeader>
 
-<div className="mt-4 mb-6 p-4 border border-phosphor-dim/30 rounded-lg bg-phosphor-ghost">
-  <p className="text-text">
-    <span className="text-phosphor-bright font-medium">New here?</span>{" "}
-    Start with the <a href="/guide/first-session" className="terminal-link">First Session Tutorial</a> for a hands-on walkthrough.
-  </p>
-</div>
+<InfoCallout variant="tip" className="mt-4 mb-6">
+  <span className="text-phosphor-bright font-medium">New here?</span>{" "}
+  Start with the <a href="/guide/first-session" className="terminal-link">First Session Tutorial</a> for a hands-on walkthrough.
+</InfoCallout>
 
-<nav className="mb-8 p-4 border border-border rounded-lg bg-elevated">
-  <p className="text-phosphor-dim text-sm uppercase tracking-wide mb-3"># Table of Contents</p>
+<nav className="mb-8 pl-4 border-l-2 border-text-muted/30">
+  <p className="text-phosphor-dim text-sm uppercase tracking-wide mb-3"># Contents</p>
   <ul className="space-y-2 text-sm">
     <li><a href="/guide/first-session" className="terminal-link">→ Your First AI Session (Tutorial)</a></li>
     <li><a href="#what-is-an-ai-ready-vault" className="terminal-link">What is an AI-Ready Vault?</a></li>

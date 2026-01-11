@@ -5,3 +5,4 @@ export { TerminalBox } from "./TerminalBox";
 export { Cursor } from "./Cursor";
 export { Link } from "./Link";
 export { CodeBlock, InlineCode } from "./CodeBlock";
+export { InfoCallout } from "./InfoCallout";

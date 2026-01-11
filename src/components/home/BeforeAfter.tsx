@@ -33,8 +33,8 @@ export function BeforeAfter() {
       <CommandHeader level={2}>The Difference</CommandHeader>
 
       <div className="mt-4 grid md:grid-cols-2 gap-6">
-        {/* Without Structure - Muted */}
-        <div className="opacity-60">
+        {/* Without Structure - Muted, brightens on hover */}
+        <div className="opacity-60 hover:opacity-100 transition-opacity duration-300 cursor-default">
           <TerminalBox title={CONTENT.without.title}>
             <div className="font-mono space-y-3">
               <div className="text-text">{CONTENT.prompt}</div>

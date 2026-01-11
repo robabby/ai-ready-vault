@@ -20,7 +20,7 @@ export default function AboutPage() {
   return (
     <PageWrapper>
       <CRTScreen className="p-8 md:p-12" showBezel={false} forceMinimal>
-        <CommandHeader level={1}>About</CommandHeader>
+        <CommandHeader level={1} glow>About</CommandHeader>
 
         {/* Project description */}
         <div className="mt-6 space-y-4 max-w-2xl">
@@ -47,7 +47,7 @@ export default function AboutPage() {
           </CommandHeader>
 
           <div className="mt-4 grid gap-4 md:grid-cols-2">
-            <TerminalBox title="structure.md">
+            <TerminalBox title="structure.md" showControls={false}>
               <div className="space-y-2 text-sm">
                 <p className="text-phosphor">PARA-inspired organization</p>
                 <p className="text-text-muted">
@@ -57,7 +57,7 @@ export default function AboutPage() {
               </div>
             </TerminalBox>
 
-            <TerminalBox title="memory.md">
+            <TerminalBox title="memory.md" showControls={false}>
               <div className="space-y-2 text-sm">
                 <p className="text-phosphor">Persistent AI memory</p>
                 <p className="text-text-muted">
@@ -67,7 +67,7 @@ export default function AboutPage() {
               </div>
             </TerminalBox>
 
-            <TerminalBox title="claude.md">
+            <TerminalBox title="claude.md" showControls={false}>
               <div className="space-y-2 text-sm">
                 <p className="text-phosphor">Working agreement</p>
                 <p className="text-text-muted">
@@ -77,7 +77,7 @@ export default function AboutPage() {
               </div>
             </TerminalBox>
 
-            <TerminalBox title="workflow.md">
+            <TerminalBox title="workflow.md" showControls={false}>
               <div className="space-y-2 text-sm">
                 <p className="text-phosphor">Session rituals</p>
                 <p className="text-text-muted">

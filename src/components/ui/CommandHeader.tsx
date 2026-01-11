@@ -6,7 +6,7 @@ interface CommandHeaderProps {
   children: string;
   /** Semantic heading level (h1-h6). Default: 2 */
   level?: HeadingLevel;
-  /** Apply phosphor glow effect. Default: true */
+  /** Apply phosphor glow effect. Default: false (use sparingly for major headers) */
   glow?: boolean;
   className?: string;
 }
@@ -24,7 +24,7 @@ interface CommandHeaderProps {
 export function CommandHeader({
   children,
   level = 2,
-  glow = true,
+  glow = false,
   className,
 }: CommandHeaderProps) {
   const HeadingTag = `h${level}` as const;
