@@ -11,6 +11,8 @@ interface FeatureCardProps {
   children: ReactNode;
   /** Background variant passed to TerminalBox */
   variant?: "default" | "elevated" | "code";
+  /** Show window control dots in title bar. Default: false */
+  showControls?: boolean;
 }
 
 /**
@@ -27,9 +29,10 @@ export function FeatureCard({
   filename,
   children,
   variant = "default",
+  showControls = false,
 }: FeatureCardProps) {
   return (
-    <TerminalBox title={filename} variant={variant}>
+    <TerminalBox title={filename} variant={variant} showControls={showControls}>
       <CommandHeader level={2}>{title}</CommandHeader>
       <div className="mt-4 text-text">{children}</div>
     </TerminalBox>

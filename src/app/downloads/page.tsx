@@ -39,7 +39,7 @@ export default function DownloadsPage() {
   return (
     <PageWrapper>
       <CRTScreen className="p-8 md:p-12" showBezel={false} forceMinimal>
-        <CommandHeader level={1}>Download</CommandHeader>
+        <CommandHeader level={1} glow>Download</CommandHeader>
 
         <p className="mt-6 text-text max-w-2xl">
           Get the complete AI-Ready Vault with folder structure, templates,
